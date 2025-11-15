@@ -32,4 +32,7 @@ require("lazy").setup({
 	require("plugins.treesitter"),
 	require("plugins.ui-extras"),
 	require("plugins.editing-extras"),
+
+	-- :Bdelete command support plugin
+	"famiu/bufdelete.nvim",
 })

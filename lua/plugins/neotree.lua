@@ -34,8 +34,6 @@ return {
 
       filesystem = {
 
-        use_libuv_file_watcher = true,
-
         -- This makes it so opening a directory just opens neo-tree
 
         hijack_netrw_behavior = "open_current_dir",
@@ -122,6 +120,23 @@ return {
 
       },
 
+    })
+
+
+
+
+    -- We create an autocommand that listens for when you
+    -- leave the 'lazygit' buffer and then tells neo-tree
+    -- to refresh its Git status.
+    --
+    local augroup = vim.api.nvim_create_augroup("NeoTreeGitRefresh", { clear = true })
+    vim.api.nvim_create_autocmd({ "BufLeave" }, {
+      group = augroup,
+      pattern = "lazygit",     
+        callback = function()
+        local events = require("neo-tree.events")
+        events.fire_event(events.GIT_EVENT)
+      end,
     })
 
   end,

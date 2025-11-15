@@ -34,6 +34,8 @@ return {
 
       filesystem = {
 
+        use_libuv_file_watcher = true,
+
         -- This makes it so opening a directory just opens neo-tree
 
         hijack_netrw_behavior = "open_current_dir",

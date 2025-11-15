@@ -14,6 +14,16 @@ return {
 				position = "left",
 				width = 40,
 				mappings = {
+					["1"] = function()
+						require("neo-tree.command").execute({ source = "filesystem", toggle = true })
+					end,
+					["2"] = function()
+						require("neo-tree.command").execute({ source = "buffers", toggle = true })
+					end,
+					["3"] = function()
+						require("neo-tree.command").execute({ source = "git_status", toggle = true })
+					end,
+
 					["<CR>"] = "open",
 					["o"] = "open",
 					["s"] = "open_vsplit",

@@ -26,4 +26,8 @@ require('lazy').setup({
   require 'plugins.git',
 
   require 'plugins.smear-cursor',
+
+  require 'plugins.treesitter',
+  require 'plugins.ui-extras',
+  require 'plugins.editing-extras',
 })

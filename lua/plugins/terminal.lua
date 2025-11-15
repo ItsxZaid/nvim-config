@@ -1,6 +1,6 @@
 return {
 
-  'akinsho/toggleterm.nvim',
+ 'akinsho/toggleterm.nvim',
 
   version = "*", -- Use the latest stable version
 

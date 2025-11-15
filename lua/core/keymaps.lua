@@ -144,7 +144,7 @@ end, { desc = 'Find help tags' })
 ---
 -- Plugin: Lazygit
 ---
-vim.keymap.set('n', '<leader>gg', '<cmd>Lazygit<CR>', { desc = 'Open Lazygit' })
+vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'Open Lazygit' })
 
 ---
 -- Plugin: Comment.nvim

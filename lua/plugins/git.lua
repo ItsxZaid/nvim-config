@@ -20,7 +20,7 @@ return {
 
   {
     'kdheepak/lazygit.nvim',
-    cmd = "Lazygit",
+    cmd = "LazyGit",
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
 }

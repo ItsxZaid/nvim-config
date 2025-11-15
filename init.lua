@@ -17,11 +17,14 @@ rtp:prepend(lazypath)
 
 
 require('lazy').setup({
+  require 'plugins.lsp-mason',
+  require 'plugins.lsp-completion',
+  require 'plugins.lsp-formatting',
   require 'plugins.neotree',
   require 'plugins.theme',
   require 'plugins.terminal',
 
-  
+
   require 'plugins.which-key',
   require 'plugins.telescope',
   require 'plugins.git',
@@ -31,4 +34,4 @@ require('lazy').setup({
   require 'plugins.treesitter',
   require 'plugins.ui-extras',
   require 'plugins.editing-extras',
-}) 
+})

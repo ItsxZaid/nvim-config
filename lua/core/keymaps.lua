@@ -1,4 +1,5 @@
 -- This file contains all of our keymaps.
+-- We add a 'desc' field to each one to make them searchable.
 
 -- Set leader key
 -- MUST be done before plugins are loaded (e.g., before lazy.setup)
@@ -119,39 +120,45 @@ vim.keymap.set('n', '<leader>th', '<cmd>ToggleTerm direction=horizontal<CR>', { 
 
 -- Exit terminal insert mode with <Esc>
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
 ---
-
-
-
------ Plugin: Telescope (Fuzzy Finder)------- 
----We call require() *inside* the function.
--- This way, it runs *when you press the key*, not at startup.
-
+-- Plugin: Telescope (Fuzzy Finder)
+---
+-- We call require() *inside* the function so it's guaranteed to be loaded.
 vim.keymap.set('n', '<leader>ff', function()
-
-  require('telescope.builtin').find_files()end, { desc = 'Find files' })
-
+  require('telescope.builtin').find_files()
+end, { desc = 'Find files' })
 
 vim.keymap.set('n', '<leader>fg', function()
-
-  require('telescope.builtin').live_grep()end, { desc = 'Find text (grep)' })
-
+  require('telescope.builtin').live_grep()
+end, { desc = 'Find text (grep)' })
 
 vim.keymap.set('n', '<leader>fb', function()
-
-  require('telescope.builtin').buffers()end, { desc = 'Find open buffers' })
-
+  require('telescope.builtin').buffers()
+end, { desc = 'Find open buffers' })
 
 vim.keymap.set('n', '<leader>fh', function()
-
-  require('telescope.builtin').help_tags()end, { desc = 'Find help tags' })
-
-
+  require('telescope.builtin').help_tags()
+end, { desc = 'Find help tags' })
 
 ---
 -- Plugin: Lazygit
 ---
 vim.keymap.set('n', '<leader>gg', '<cmd>Lazygit<CR>', { desc = 'Open Lazygit' })
+
+---
+-- Plugin: Comment.nvim
+---
+-- This adds the "toggle comment" keymap.
+-- I'm using <leader>/ which is a common and easy-to-remember key.
+vim.keymap.set('n', '<leader>/', function()
+  require('Comment.api').toggle.linewise.current()
+end, { desc = 'Toggle comment' })
+
+vim.keymap.set('v', '<leader>/', function()
+  -- In visual mode, we toggle the selected lines
+  require('Comment.api').toggle.linewise(vim.fn.visualmode())
+end, { desc = 'Toggle comment (visual)' })
 
 ---
 -- Plugin: Diagnostics (LSP)

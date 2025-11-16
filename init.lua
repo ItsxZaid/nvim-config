@@ -23,6 +23,7 @@ require("lazy").setup({
 	require("plugins.theme"),
 	require("plugins.terminal"),
 
+	require("plugins.session"),
 	require("plugins.which-key"),
 	require("plugins.telescope"),
 	require("plugins.git"),

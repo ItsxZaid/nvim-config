@@ -1,72 +1,69 @@
 return {
-	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = {
-			"neovim/nvim-lspconfig",
-			"williamboman/mason.nvim",
-		},
-		config = function()
-		    vim.diagnostic.config({
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "williamboman/mason.nvim",
+        },
+        config = function()
+            vim.diagnostic.config({
                 virtual_text = true,
                 underline = true,
                 update_in_insert = false,
                 severity_sort = true,
                 signs = {
-                active = true,
-                text = {
-                    [vim.diagnostic.severity.ERROR] = "",
-                    [vim.diagnostic.severity.WARN] = "",
-                    [vim.diagnostic.severity.INFO] = "",
-                    [vim.diagnostic.severity.HINT] = "",
+                    active = true,
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "",
+                        [vim.diagnostic.severity.WARN] = "",
+                        [vim.diagnostic.severity.INFO] = "",
+                        [vim.diagnostic.severity.HINT] = "",
                     },
                 },
             })
 
-			local on_attach = function(client, bufnr)
-				local opts = { buffer = bufnr, noremap = true, silent = true }
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "lua_ls", "gopls", "ts_ls", "cssls", "html", "jsonls", "tailwindcss",
+                },
+                automatic_installation = true,
+                handlers = {
+                    function(server_name)
+                        require("lspconfig")[server_name].setup({}) -- Use default setup
+                    end,
+                },
+            })
 
-				-- Go to Definition
-				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-				-- Go to Declaration
-				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-				-- Hover for documentation
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-				-- Find References
-				vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-				-- Rename symbol
-				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-				-- Diagnostics
-				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-			end
+            local lsp_keymap_group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true })
 
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"gopls",
-					"ts_ls",
-					"cssls",
-					"html",
-					"jsonls",
-					"tailwindcss",
-				},
-				automatic_installation = true,
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = lsp_keymap_group,
+                desc = "Set LSP keymaps",
+                callback = function(event)
+                    local opts = { buffer = event.buf, noremap = true, silent = true }
 
-				handlers = {
-					function(server_name)
-						require("lspconfig")[server_name].setup({
-							on_attach = on_attach,
-						})
-					end,
-				},
-			})
-		end,
-	},
+                    -- Go to Definition
+                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                    -- Go to Declaration
+                    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+                    -- Hover for documentation
+                    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+                    -- Find References
+                    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                    -- Rename symbol
+                    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+                    -- Diagnostics
+                    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+                    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+                    vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+                end,
+            })
+        end,
+    },
 }

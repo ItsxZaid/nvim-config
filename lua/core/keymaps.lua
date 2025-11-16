@@ -141,6 +141,10 @@ vim.keymap.set("n", "<leader>fr", function()
 	require("telescope.builtin").oldfiles()
 end, { desc = "Find recent files (Oldfiles)" })
 
+vim.keymap.set("n", "<leader>fp", function()
+	require("telescope").extensions.projects.projects()
+end, { desc = "Find projects" })
+
 vim.keymap.set("n", "<leader>fh", function()
 	require("telescope.builtin").help_tags()
 end, { desc = "Find help tags" })

@@ -51,9 +51,6 @@ vim.keymap.set("n", "<leader>b", "<cmd> enew <CR>", { desc = "New empty buffer" 
 ---
 -- NOTE: 'vim.o.clipboard = "unnamedplus"' is set in options.lua
 
--- Copy selected characters in Visual mode to system clipboard
-vim.keymap.set("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
-
 -- Delete single character without copying into register
 vim.keymap.set("n", "x", '"_x', { desc = "Delete character" })
 
@@ -109,14 +106,33 @@ vim.keymap.set("n", "<leader>e", "<cmd> Neotree toggle <CR>", { desc = "Toggle f
 -- Plugin: Terminals (from toggleterm.nvim)
 ---
 
--- Toggle a floating terminal
-vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float<CR>", { desc = "Toggle floating terminal" })
+-- for count-based terminals.
+local function toggleterm_cmd(direction)
+	-- v:count1 is the "count" you pass (e.g., "2")
+	-- If it's 0 or 1, we just run the command
+	-- If it's > 1, we prepend the count to the command
+	local count = vim.v.count1
+	if count > 0 then
+		vim.cmd(count .. "ToggleTerm " .. "direction=" .. direction)
+	else
+		vim.cmd("ToggleTerm " .. "direction=" .. direction)
+	end
+end
 
--- Toggle a vertical terminal
-vim.keymap.set("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Toggle vertical terminal" })
+-- Toggle a floating terminal (with count)
+vim.keymap.set("n", "<leader>t", function()
+	toggleterm_cmd("float")
+end, { desc = "Toggle floating terminal [count]" })
 
--- Toggle a horizontal terminal
-vim.keymap.set("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Toggle horizontal terminal" })
+-- Toggle a vertical terminal (with count)
+vim.keymap.set("n", "<leader>tv", function()
+	toggleterm_cmd("vertical")
+end, { desc = "Toggle vertical terminal [count]" })
+
+-- Toggle a horizontal terminal (with count)
+vim.keymap.set("n", "<leader>th", function()
+	toggleterm_cmd("horizontal")
+end, { desc = "Toggle horizontal terminal [count]" })
 
 -- Exit terminal insert mode with <Esc>
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })

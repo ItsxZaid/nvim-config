@@ -35,6 +35,8 @@ return {
 						select = true, -- This is the key. It confirms the selected item.
 					}),
 
+					["<C-Space>"] = cmp.mapping.complete(),
+
 					-- This is your new "Smart Tab"
 					-- It will do 3 things, in order:
 					-- 1. If menu is open, go to the next item.

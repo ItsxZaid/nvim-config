@@ -23,6 +23,8 @@ require("lazy").setup({
 	require("plugins.theme"),
 	require("plugins.terminal"),
 
+	require("plugins.notify"),
+
 	require("plugins.project"),
 
 	require("plugins.session"),

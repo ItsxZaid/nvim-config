@@ -34,6 +34,32 @@ vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 
 ---
+-- Force hjkl muscle memory
+-- This block disables arrow keys in Normal Mode and yells at you.
+---
+local function brutal_hjkl_reminder(key, replacement)
+	-- We use vim.notify for a clean, non-blocking popup.
+	local msg = string.format("FUCK. Stop mashing <%s>. Use %s.", key, replacement)
+	vim.notify(msg, vim.log.levels.ERROR, { title = "Muscle Memory Failure" })
+
+	-- We're also printing to the command line just to be extra loud.
+	vim.api.nvim_echo({ { msg, "ErrorMsg" } }, false, {})
+end
+
+vim.keymap.set("n", "<Up>", function()
+	brutal_hjkl_reminder("Up", "k")
+end, { desc = "Don't use this. Use k." })
+vim.keymap.set("n", "<Down>", function()
+	brutal_hjkl_reminder("Down", "j")
+end, { desc = "Don't use this. Use j." })
+vim.keymap.set("n", "<Left>", function()
+	brutal_hjkl_reminder("Left", "h")
+end, { desc = "Don't use this. Use h." })
+vim.keymap.set("n", "<Right>", function()
+	brutal_hjkl_reminder("Right", "l")
+end, { desc = "Don't use this. Use l." })
+
+---
 -- File / Buffer / Quit
 ---
 

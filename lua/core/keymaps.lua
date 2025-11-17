@@ -59,6 +59,10 @@ vim.keymap.set("n", "<Right>", function()
 	brutal_hjkl_reminder("Right", "l")
 end, { desc = "Don't use this. Use l." })
 
+-- Open new line and stay in Normal Mode
+vim.keymap.set("n", "<leader>o", "o<Esc>", { desc = "Open line below (Normal Mode)" })
+vim.keymap.set("n", "<leader>O", "O<Esc>", { desc = "Open line above (Normal Mode)" })
+
 ---
 -- File / Buffer / Quit
 ---
@@ -211,32 +215,22 @@ vim.keymap.set("v", "<leader>/", function()
 end, { desc = "Toggle comment (visual)" })
 
 ---
--- Plugin: Diagnostics (LSP)
+-- Plugin: Diagnostics (LSP & Trouble)
 ---
--- These are the *original* diagnostic maps from your file.
--- We keep these here for now. When we install the LSP,
--- we will move these to a better spot.
-local diagnostics_active = true
-vim.keymap.set("n", "<leader>do", function()
-	diagnostics_active = not diagnostics_active
-	if diagnostics_active then
-		vim.diagnostic.enable(true)
-	else
-		vim.diagnostic.enable(false)
-	end
-end, { desc = "Toggle diagnostics" })
-
--- Diagnostic navigation
-vim.keymap.set("n", "[d", function()
-	vim.diagnostic.jump({ count = -1, float = true })
-end, { desc = "Go to previous diagnostic" })
-
-vim.keymap.set("n", "]d", function()
-	vim.diagnostic.jump({ count = 1, float = true })
-end, { desc = "Go to next diagnostic" })
-
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostic message" })
-vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+-- Trouble.nvim keymaps
+vim.keymap.set("n", "<leader>xx", function()
+	require("trouble").toggle()
+end, { desc = "Toggle Trouble list" })
+vim.keymap.set("n", "<leader>xw", function()
+	require("trouble").toggle("workspace_diagnostics")
+end, { desc = "Workspace diagnostics" })
+vim.keymap.set("n", "<leader>xd", function()
+	require("trouble").toggle("document_diagnostics")
+end, { desc = "Document diagnostics" })
 
 ---
 -- Editor & Code
@@ -271,3 +265,56 @@ vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>", { desc = "Toggle line wr
 -- Save and load session
 vim.keymap.set("n", "<leader>ss", ":mksession! .session.vim<CR>", { silent = false, desc = "Save session" })
 vim.keymap.set("n", "<leader>sl", ":source .session.vim<CR>", { silent = false, desc = "Load session" })
+
+---
+-- Plugin: Debugger (DAP)
+---
+vim.keymap.set("n", "<leader>b", function()
+	require("dap").toggle_breakpoint()
+end, { desc = "Toggle breakpoint" })
+vim.keymap.set("n", "<leader>dc", function()
+	require("dap").continue()
+end, { desc = "Continue debugger" })
+vim.keymap.set("n", "<leader>do", function()
+	require("dap").step_over()
+end, { desc = "Debug step over" })
+vim.keymap.set("n", "<leader>di", function()
+	require("dap").step_into()
+end, { desc = "Debug step into" })
+vim.keymap.set("n", "<leader>du", function()
+	require("dap").step_out()
+end, { desc = "Debug step out" })
+vim.keymap.set("n", "<leader>dx", function()
+	require("dap").terminate()
+end, { desc = "Stop debugger" })
+vim.keymap.set("n", "<leader>dr", function()
+	require("dap").repl.open()
+end, { desc = "Open debug REPL" })
+vim.keymap.set("n", "<leader>dl", function()
+	require("dap").run_last()
+end, { desc = "Run last debug" })
+vim.keymap.set("n", "<leader>dui", function()
+	require("dapui").toggle()
+end, { desc = "Toggle DAP UI" })
+
+---
+-- Plugin: Neotest
+---
+vim.keymap.set("n", "<leader>tr", function()
+	require("neotest").run.run()
+end, { desc = "Run nearest test" })
+vim.keymap.set("n", "<leader>tf", function()
+	require("neotest").run.run(vim.fn.expand("%"))
+end, { desc = "Run tests in file" })
+vim.keymap.set("n", "<leader>ts", function()
+	require("neotest").run.stop()
+end, { desc = "Stop nearest test" })
+
+vim.keymap.set("n", "<leader>to", function()
+	require("neotest").output.open({ enter = true })
+end, { desc = "Show test output" })
+
+---
+-- Plugin: Notifications
+---
+vim.keymap.set("n", "<leader>n", "<cmd>Telescope notify<CR>", { desc = "Show notification history" })

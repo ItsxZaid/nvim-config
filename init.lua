@@ -40,4 +40,8 @@ require("lazy").setup({
 
 	-- :Bdelete command support plugin
 	"famiu/bufdelete.nvim",
+
+	require("plugins.dap"),
+	require("plugins.trouble"),
+	require("plugins.testing"),
 })

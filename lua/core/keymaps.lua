@@ -88,9 +88,6 @@ vim.keymap.set("n", "<A-k>", "5k", { desc = "Move up 5 lines" })
 -- Delete (Void)
 ---
 
--- Delete single character without copying into register
-vim.keymap.set("n", "x", '"_x', { desc = "Delete character (void)" })
-
 -- THE VOID OPERATOR-- This maps X to "_d, so it works with all motions (Xiw, Xaw, X$)
 vim.keymap.set({ "n", "v" }, "X", '"_d', { desc = "Delete to void (cut)" })
 

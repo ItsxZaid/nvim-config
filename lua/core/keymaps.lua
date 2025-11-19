@@ -239,16 +239,23 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous dia
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostic message" })
 
--- Trouble.nvim keymaps
 vim.keymap.set("n", "<leader>xx", function()
-	require("trouble").toggle()
-end, { desc = "Toggle Trouble list" })
+	-- This shows all diagnostics (workspace scope)
+
+	require("trouble").toggle("diagnostics")
+end, { desc = "Toggle All Diagnostics (Trouble)" })
+
 vim.keymap.set("n", "<leader>xw", function()
-	require("trouble").toggle("workspace_diagnostics")
-end, { desc = "Workspace diagnostics" })
+	-- This also shows all diagnostics (workspace scope) and keeps your keymap.
+
+	require("trouble").toggle("diagnostics")
+end, { desc = "Toggle All Diagnostics (Trouble)" })
+
 vim.keymap.set("n", "<leader>xd", function()
-	require("trouble").toggle("document_diagnostics")
-end, { desc = "Document diagnostics" })
+	-- This uses a filter to show only the current buffer's diagnostics.
+
+	require("trouble").toggle("diagnostics", { filter = { buf = 0 } })
+end, { desc = "Toggle Document Diagnostics" })
 
 ---
 -- Editor & Code

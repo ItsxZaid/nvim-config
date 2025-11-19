@@ -73,7 +73,7 @@ vim.keymap.set("n", "<leader>O", "O<Esc>", { desc = "Open line above (Normal Mod
 vim.keymap.set("n", "<leader>w", "<cmd> w <CR>", { desc = "Save file" })
 vim.keymap.set("n", "<leader>sn", "<cmd>noautocmd w <CR>", { desc = "Save without auto-formatting" })
 vim.keymap.set("n", "<leader>q", "<cmd> q <CR>", { desc = "Quit file" })
-vim.keymap.set("n", "<leader>x", ":Bdelete!<CR>", { desc = "Close current buffer" })
+vim.keymap.set("n", "<leader>bd", ":Bdelete!<CR>", { desc = "Close current buffer" })
 vim.keymap.set("n", "<leader>b", "<cmd> enew <CR>", { desc = "New empty buffer" })
 
 ---

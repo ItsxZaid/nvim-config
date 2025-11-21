@@ -15,7 +15,7 @@ return {
 				html = { "prettier" },
 				json = { "prettier" },
 				markdown = { "prettier" },
-
+				svelte = { "prettier" },
 				-- Go
 				go = { "gofumpt" },
 			},

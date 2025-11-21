@@ -16,7 +16,6 @@ return {
 					"pnpm%-lock%.yaml",
 
 					-- Svelte / Frontend
-					"%.svelte",
 					"%.astro",
 					"%.vue",
 

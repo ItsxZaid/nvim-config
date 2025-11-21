@@ -44,4 +44,7 @@ require("lazy").setup({
 	require("plugins.dap"),
 	require("plugins.trouble"),
 	require("plugins.testing"),
+
+	-- Discord rich presence to show "i use Neovim btw"
+	require("plugins.cord"),
 })
